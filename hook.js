@@ -182,7 +182,7 @@ hook.request.after = ctx => {
 			let body = JSON.stringify(netease.jsonBody, inject)
 			body = body.replace(/([^\\]"\s*:\s*)"(\d{16,})L"(\s*[}|,])/g, '$1$2$3') // for js precision
 
-			console.log(body)
+			
 			proxyRes.body = (netease.encrypted ? crypto.eapi.encrypt(Buffer.from(body)) : body)
 		})
 		.catch(error => error ? console.log(error, ctx.req.url) : null)
