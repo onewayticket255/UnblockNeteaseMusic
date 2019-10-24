@@ -5,6 +5,7 @@ const request = require('./request')
 const match = require('./provider/match')
 const querystring = require('querystring')
 
+
 const hook = {
 	request: {
 		before: () => {},
@@ -152,7 +153,20 @@ hook.request.after = ctx => {
 			if('content-encoding' in proxyRes.headers) delete proxyRes.headers['content-encoding']
 			if('content-length' in proxyRes.headers) delete proxyRes.headers['content-length']
 
+
 			const inject = (key, value) => {
+
+			//only for ios          
+              if(netease.path.indexOf('batch')){
+                if (key == `/api/personalized/block/feed/v2`||key == `/api/theme/get/v3`||key == `/api/vipcenter/entrance/info/v3/get`) {
+                 value=null
+                }
+                if (key == `/api/personalized/block/old/v2`) {	
+                 value['data'][1]=null
+                }
+            }
+			//only for ios  
+			
 				if(typeof(value) === 'object' && value != null){
 					if('fee' in value) value['fee'] = 0
 					if('st' in value && 'pl' in value && 'dl' in value && 'subp' in value){ // batch modify
@@ -167,6 +181,8 @@ hook.request.after = ctx => {
 
 			let body = JSON.stringify(netease.jsonBody, inject)
 			body = body.replace(/([^\\]"\s*:\s*)"(\d{16,})L"(\s*[}|,])/g, '$1$2$3') // for js precision
+
+			console.log(body)
 			proxyRes.body = (netease.encrypted ? crypto.eapi.encrypt(Buffer.from(body)) : body)
 		})
 		.catch(error => error ? console.log(error, ctx.req.url) : null)
