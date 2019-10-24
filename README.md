@@ -2,6 +2,9 @@
 感谢 nondanee 大佬！
 
 配合Surge食用
+
+
+```
 [Rule]
 URL-REGEX,https?://interface3?.music.163.com/eapi/batch,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/v1/search,NeteaseMusicUnlock
@@ -23,3 +26,4 @@ USER-AGENT,neteasemusic*,REJECT-TINYGIF
 [MITM]
 skip-server-cert-verify = true
 hostname = interface.music.163.com, interface3.music.163.com
+```
