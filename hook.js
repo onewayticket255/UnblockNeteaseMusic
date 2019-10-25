@@ -156,16 +156,19 @@ hook.request.after = ctx => {
 
 			const inject = (key, value) => {
 
-			//only for ios          
+//only for ios          
               if(netease.path.indexOf('batch')){
-                if (key == `/api/personalized/block/feed/v2`||key == `/api/theme/get/v3`||key == `/api/vipcenter/entrance/info/v3/get`) {
+                if (key == `/api/personalized/block/feed/v2`||key == `/api/theme/get/v3`||key == `/api/vipcenter/entrance/info/v3/get`||key == `/api/vipcenter/tspopup/get`) {
                  value=null
                 }
                 if (key == `/api/personalized/block/old/v2`) {	
                  value['data'][1]=null
-                }
+				}
+				if (key == `/api/delivery/deliver`) {	
+					value=null
+				}
             }
-			//only for ios  
+//only for ios  
 			
 				if(typeof(value) === 'object' && value != null){
 					if('fee' in value) value['fee'] = 0
@@ -181,8 +184,7 @@ hook.request.after = ctx => {
 
 			let body = JSON.stringify(netease.jsonBody, inject)
 			body = body.replace(/([^\\]"\s*:\s*)"(\d{16,})L"(\s*[}|,])/g, '$1$2$3') // for js precision
-
-			
+//console.log(body)
 			proxyRes.body = (netease.encrypted ? crypto.eapi.encrypt(Buffer.from(body)) : body)
 		})
 		.catch(error => error ? console.log(error, ctx.req.url) : null)

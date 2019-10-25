@@ -25,5 +25,5 @@ USER-AGENT,neteasemusic*,REJECT-TINYGIF
 
 [MITM]
 skip-server-cert-verify = true
-hostname = interface.music.163.com, interface3.music.163.com
+hostname = interface.music.163.com, interface3.music.163.com, YOUR MUSIC DOMAIN
 ```
