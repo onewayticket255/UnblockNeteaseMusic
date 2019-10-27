@@ -158,14 +158,11 @@ hook.request.after = ctx => {
 
 //only for ios          
               if(netease.path.indexOf('batch')){
-                if (key == `/api/personalized/block/feed/v2`||key == `/api/theme/get/v3`||key == `/api/vipcenter/entrance/info/v3/get`||key == `/api/vipcenter/tspopup/get`) {
+                if (key == `/api/personalized/block/feed/v2`||key == `/api/theme/get/v3`||key == `/api/vipcenter/entrance/info/v3/get`||key == `/api/vipcenter/tspopup/get`||key == '/api/delivery/deliver') {
                  value=null
                 }
                 if (key == `/api/personalized/block/old/v2`) {	
                  value['data'][1]=null
-				}
-				if (key == `/api/delivery/deliver`) {	
-					value=null
 				}
             }
 //only for ios  

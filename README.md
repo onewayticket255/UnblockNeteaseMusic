@@ -13,6 +13,7 @@ URL-REGEX,https?://interface3?.music.163.com/eapi/song/like,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/song/enhance/player/url,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/song/enhance/download/url,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/artist/top/song,NeteaseMusicUnlock
+URL-REGEX,https?://interface3?.music.163.com/eapi/v1/artist/song,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/album/privilege,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/playlist/privilege,NeteaseMusicUnlock
 URL-REGEX,https?://interface3?.music.163.com/eapi/v6/playlist/detail,NeteaseMusicUnlock
