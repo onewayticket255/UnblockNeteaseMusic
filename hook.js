@@ -113,6 +113,7 @@ hook.request.before = ctx => {
 			let id = data[1].replace('.mp3', '')
 			req.url = url.href
 			req.headers['host'] = url.hostname
+			req.headers['cookie'] = null
 			ctx.package = {id}
 			ctx.decision = 'proxy'
 			// if(url.href.includes('google'))
@@ -152,9 +153,7 @@ hook.request.after = ctx => {
 				return tryMatch(ctx)
 		})
 		.then(() => {
-			if('transfer-encoding' in proxyRes.headers) delete proxyRes.headers['transfer-encoding']
-			if('content-encoding' in proxyRes.headers) delete proxyRes.headers['content-encoding']
-			if('content-length' in proxyRes.headers) delete proxyRes.headers['content-length']
+			['transfer-encoding', 'content-encoding', 'content-length'].filter(key => key in proxyRes.headers).forEach(key => delete proxyRes.headers[key])
 
 
 			const inject = (key, value) => {
@@ -317,7 +316,7 @@ const tryMatch = ctx => {
 						.filter(pair => pair[0] != pair[1])[0]
 					return !difference || difference[0] <= difference[1]
 				}
-				const limit = {android: '0.0.0', osx: '2.0.0'}
+				const limit = {android: '0.0.0', osx: '0.0.0'}
 				const task = {key: song.url.replace(/\?.*$/, '').replace(/(?<=kugou\.com\/)\w+\/\w+\//, '').replace(/(?<=kuwo\.cn\/)\w+\/\w+\/resource\//, ''), url: song.url}
 				try{
 					let header = netease.param.header
@@ -344,7 +343,7 @@ const tryMatch = ctx => {
 		tasks = [inject(jsonBody.data)]
 	}
 	else{
-		target = netease.web ? 0 : parseInt((netease.param.ids instanceof Array ? netease.param.ids : JSON.parse(netease.param.ids))[0].toString().replace('_0', '')) // reduce time cost
+		target = netease.web ? 0 : parseInt(((netease.param.ids instanceof Array ? netease.param.ids : JSON.parse(netease.param.ids))[0] || 0).toString().replace('_0', '')) // reduce time cost
 		tasks = jsonBody.data.map(item => inject(item))
 	}
 	return Promise.all(tasks).catch(() => {})
